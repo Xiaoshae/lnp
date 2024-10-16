@@ -1,0 +1,15 @@
+# LNP
+
+该项目将 nginx 和 php-fpm Docker官方的Dockerfile进行整合，以达到将 nginx 和 php-fpm 放置在一个容器中的目的。
+
+nginx 使用 unix 套接字与 php-fpm 交互，而不是使用默认的TCP9000端口。
+
+nginx 与 unix 都使用 www-data 用户作为服务启动后的用户。
+
+unix 套接字位于 /var/run/php-fpm.sock , 用户和用户组均为 www-data 权限为600
+
+nginx 监听 tcp 80 端口，使用/var/www/html路径作为网站根路径
+
+容器在启动时，会自动执行/init.sh脚本进行初始化，该脚本默认不会进行任何操作，可用覆盖此脚本，以在容器启动时进行初始化此操作。
+
+进入对应的版本，执行 docker build . 即可生成镜像文件，也可以直接导入路径中的 image.tar 镜像文件。
